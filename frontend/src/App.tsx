@@ -1,10 +1,21 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import RoundedButton from "./components/RoundedButton";
 import consts from "./consts";
+import Alert from "./components/Alert";
+import useAlert from "./hooks/useAlert";
 
 function App() {
     const name = useRef<HTMLInputElement>(null);
     const src = useRef<HTMLInputElement>(null);
+    const {
+        alertMessage,
+        showAlert,
+        alertType,
+        setAlertMessage,
+        setShowAlert,
+        setAlertType,
+        closeAlert,
+    } = useAlert();
 
     const sendData = async () => {
         try {
@@ -27,7 +38,9 @@ function App() {
                         }
                     );
                     const result = await response.json();
-                    console.log(result.ok);
+                    setAlertType(true);
+                    setAlertMessage("Successfully added character");
+                    setShowAlert(true);
                 } else {
                     throw new Error("Input is too short!");
                 }
@@ -35,13 +48,16 @@ function App() {
                 throw new Error("Input is empty!");
             }
         } catch (error) {
+            setAlertType(false);
+            setAlertMessage("Failed to add character");
+            setShowAlert(true);
             console.error(error);
         }
     };
 
     return (
         <div className="h-screen flex items-center">
-            <RoundedButton link="./characters" btnText="Go to Characters" />
+            <RoundedButton link="./characters" btnText="Characters" />
             <div className="border-2 border-solid border-indigo-600 mx-auto w-3/6 p-10">
                 <form className="flex flex-col gap-y-8">
                     <input
@@ -61,7 +77,7 @@ function App() {
                         ref={src}
                     />
                     <button
-                        type="submit"
+                        type="button"
                         className="font-medium mx-auto p-3 border-2 border-solid border-indigo-600 rounded-md hover:bg-indigo-600 ease-in-out duration-300 w-72"
                         onClick={sendData}
                     >
@@ -69,6 +85,13 @@ function App() {
                     </button>
                 </form>
             </div>
+            {showAlert && (
+                <Alert
+                    message={alertMessage}
+                    success={alertType}
+                    onClose={closeAlert}
+                />
+            )}
         </div>
     );
 }

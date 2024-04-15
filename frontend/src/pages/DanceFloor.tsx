@@ -19,7 +19,7 @@ const Customers = () => {
 
     return (
         <div className="h-screen flex items-center justify-center">
-            <RoundedButton btnText="Go to Main" link="/" />
+            <RoundedButton btnText="Back to Main Page" link="/" />
             <div className="border-2 border-solid border-indigo-600 w-3/6 h-5/6 flex justify-center items-center">
                 {isLoading ? <Loader /> : <AnimeTable danceFloorArray={data} />}
             </div>
