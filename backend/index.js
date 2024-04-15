@@ -38,10 +38,15 @@ server.post('/api/postData', async (req, res) => {
         src: req.body.src,
     })
     try {
+        const isExist = await danceFloorShema.findOne({ name: character.name }).exec();
+        if (isExist) {
+            throw new Error('Character with this name already exist!');
+        }
+        
         await character.save();
-        res.send({ ok: true });
+        res.status(200).send({ ok: true });
     } catch (error) {
-        console.log(error);
-        res.send({ ok: false });
+        console.error(error);
+        res.status(400).send({ error: error });
     }
 })
