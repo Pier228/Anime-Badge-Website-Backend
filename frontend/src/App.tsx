@@ -37,7 +37,11 @@ function App() {
                             }),
                         }
                     );
-                    const result = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error("Failed to add character");
+                    }
+
                     setAlertType(true);
                     setAlertMessage("Successfully added character");
                     setShowAlert(true);
