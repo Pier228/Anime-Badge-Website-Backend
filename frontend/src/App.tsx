@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import RoundedButton from "./components/RoundedButton";
 import consts from "./consts";
 import Alert from "./components/Alert";

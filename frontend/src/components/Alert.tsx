@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import IAlert from "../Interfaces/IAlert";
 
 const Alert = (props: IAlert) => {
